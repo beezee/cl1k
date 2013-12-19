@@ -11,13 +11,16 @@
 		</li>
 	</ul>
 <% elsif !current_page?(sign_up_path) && !current_page?(sign_in_path) %>
-	<form class="navbar-form navbar-right">
+	<%= form_for :session, url: session_path,
+				html: { class: 'navbar-form navbar-right' } do |f| %>
 		<div class="form-group">
-			<input type="text" placeholder="Email" class="form-control">
+			<%= f.text_field :email, type: 'email',
+						placeholder: 'Email', class: 'form-control' %>
 		</div>
 		<div class="form-group">
-			<input type="password" placeholder="Password" class="form-control">
+			<%= f.password_field :password, placeholder: 'Password',
+						class: 'form-control' %>
 		</div>
-		<button type="submit" class="btn btn-primary">Sign in</button>
-	</form>
+		<%= f.submit 'Sign in', class: 'btn btn-primary' %>
+	<% end %>
 <% end %>	

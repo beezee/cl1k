@@ -13,6 +13,7 @@ gem 'sass-rails', '~> 4.0.0'
 gem 'bootstrap-sass'
 
 group :development, :test do
+  gem 'selenium-webdriver', '2.35.1'
 	gem 'capybara', '~> 2.0'
 	gem 'factory_girl_rails', '~> 4.2'
 	gem 'rspec-rails', '~> 2.13'
