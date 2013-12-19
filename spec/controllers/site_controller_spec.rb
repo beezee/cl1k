@@ -6,14 +6,15 @@ describe SiteController do
 
   describe 'dashboard' do
     context 'as a guest' do
-      before { visit dashboard_path }
+      before { get :dashboard }
 
       specify { expect(response).to redirect_to(sign_in_path) }
     end
 
     context 'as a user' do
       before do
-        visit dashboard_path(as: user)
+				sign_in_as user
+				get :dashboard
       end
 
       specify { expect(response).to be_success }
@@ -22,14 +23,15 @@ describe SiteController do
 
   describe 'index' do
     context 'as a guest' do
-      before { visit root_path }
+      before { get :index }
 
       specify { expect(response).to be_success }
     end
 
     context 'as a user' do
       before do
-        visit root_path(as: user)
+				sign_in_as user
+				get :index
       end
 
       specify { expect(response).to redirect_to(dashboard_path) }
