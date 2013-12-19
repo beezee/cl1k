@@ -11,7 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131219135017) do
+ActiveRecord::Schema.define(version: 20131219221046) do
+
+  create_table "redirects", force: true do |t|
+    t.string   "target"
+    t.string   "slug"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "redirects", ["slug"], name: "index_redirects_on_slug", unique: true, using: :btree
+  add_index "redirects", ["target", "user_id"], name: "index_redirects_on_target_and_user_id", unique: true, using: :btree
 
   create_table "users", force: true do |t|
     t.datetime "created_at",                     null: false
