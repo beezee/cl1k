@@ -31,7 +31,7 @@ module Features
     end
 
     def user_should_be_signed_out
-      page.should have_content I18n.t('layouts.application.sign_in')
+      page.should have_xpath('//input[@value="Sign in"]')
     end
 
     def user_with_reset_password

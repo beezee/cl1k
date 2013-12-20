@@ -11,7 +11,37 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131219221046) do
+ActiveRecord::Schema.define(version: 20131220181608) do
+
+  create_table "cities", force: true do |t|
+    t.string   "name"
+    t.string   "state"
+    t.string   "country"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "cities", ["latitude", "longitude"], name: "index_cities_on_latitude_and_longitude", unique: true, using: :btree
+  add_index "cities", ["name", "state", "country"], name: "index_cities_on_name_and_state_and_country", unique: true, using: :btree
+
+  create_table "clicks", force: true do |t|
+    t.integer  "redirect_id"
+    t.string   "user_agent"
+    t.string   "browser"
+    t.string   "version"
+    t.string   "platform"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.string   "ip_address"
+    t.integer  "city_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "clicks", ["city_id"], name: "index_clicks_on_city_id", using: :btree
+  add_index "clicks", ["redirect_id"], name: "index_clicks_on_redirect_id", using: :btree
 
   create_table "redirects", force: true do |t|
     t.string   "target"

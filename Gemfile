@@ -6,6 +6,8 @@ gem 'rails', '4.0.2'
 # Use sqlite3 as the database for Active Record
 gem 'mysql2'
 gem 'clearance'
+gem 'geocoder'
+gem 'useragent'
 
 
 # Use SCSS for stylesheets
