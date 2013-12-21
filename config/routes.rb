@@ -5,6 +5,10 @@ Cl1k::Application.routes.draw do
   # You can have the root of your site routed with "root"
   root 'site#index'
 	get 'dashboard' => 'site#dashboard', as: :dashboard
+	resources :redirects, only: [:index, :create, :destroy] do
+		resources :clicks, only: :index, on: :member
+	end
+	get 'r/:redirect_slug' => 'redirects#clickthrough', as: :redirect_clickthrough
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
