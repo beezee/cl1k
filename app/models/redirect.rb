@@ -1,5 +1,6 @@
 class Redirect < ActiveRecord::Base
 	belongs_to :user
+	has_many :clicks
 	validates :user_id, presence: true
 	validates :target, format: /\A(http|https):\/\/[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(([0-9]{1,5})?\/.*)?\Z/ix
 	before_validation :ensure_unique_slug

@@ -7,6 +7,7 @@ describe Redirect do
 	it { should respond_to(:target) }
 	it { should respond_to(:slug) }
 	it { should respond_to(:user) }
+	it { should respond_to(:clicks) }
 	it { should be_valid }
 
 	describe 'with no user_id set' do
@@ -63,5 +64,13 @@ describe Redirect do
 				redirect.should be_valid
 			end
 		end
+	end
+
+	describe 'with click assigned' do
+		let(:click) { FactoryGirl.build :click }
+
+		before { redirect.clicks << click }
+
+		specify { expect(redirect.reload.clicks.first).to eq click }
 	end
 end
