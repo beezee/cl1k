@@ -8,7 +8,8 @@ gem 'mysql2'
 gem 'clearance'
 gem 'geocoder'
 gem 'useragent'
-
+gem 'sidekiq'
+gem 'rspec-sidekiq'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'

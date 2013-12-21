@@ -19,6 +19,8 @@ class RedirectsController < ApplicationController
 
 	def clickthrough
 		@redirect = Redirect.find_by_slug(params[:redirect_slug]) || not_found
+		Click.delay.create redirect_id: @redirect.id, ip_address: request.headers['X_REAL_IP'],
+					created_at: Time.now
 		redirect_to @redirect.target
 	end
 

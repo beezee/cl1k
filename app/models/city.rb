@@ -8,8 +8,8 @@ class City < ActiveRecord::Base
 		def address
 			return @address unless @address.nil?
 			@geocoder_results = Geocoder.search("#{self.name} #{self.state} #{self.country}")
-			return @geocoder_results if @geocoder_results.nil?
-			@address = @geocoder_results.first	
+			return @address = UnspecifiedAddress.new if @geocoder_results.nil?
+			@address = @geocoder_results.first.nil? ? UnspecifiedAddress.new : @geocoder_results.first
 		end
 		
 		def geocode
