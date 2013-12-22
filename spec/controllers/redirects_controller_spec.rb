@@ -10,15 +10,15 @@ describe RedirectsController do
 	shared_examples 'the clickthrough action' do
 
 		describe 'request' do
-			before { get :clickthrough, {redirect_slug: redirect.slug}, 'X_REAL_IP' => '133.713.371.337' } 
+			before { get :clickthrough, {redirect_slug: redirect.slug}, 'HTTP_X_REAL_IP' => '133.713.371.337' } 
 			specify { expect(response).to redirect_to(redirect.target) }
 		end
 
 		describe 'with ip from request headers' do
 			specify do
 				expect do
-					get :clickthrough, {redirect_slug: redirect.slug}, 'X_REAL_IP' => '133.713.371.337'
-				end.to change{Sidekiq::Extensions::DelayedClass.jobs.size}.by(1)
+					get :clickthrough, {redirect_slug: redirect.slug}, 'HTTP_X_REAL_IP' => '133.713.371.337'
+				end.to change{ClickTracker.jobs.size}.by(1)
 			end
 
 			describe 'after processing queue' do
@@ -29,13 +29,13 @@ describe RedirectsController do
 				end
 
 				specify do
-					expect{ Sidekiq::Extensions::DelayedClass.drain }.to change(Click, :count).by(1) 
+					expect{ ClickTracker.drain }.to change(Click, :count).by(1) 
 				end
 
 				specify do
 					time
 					sleep 1
-					Sidekiq::Extensions::DelayedClass.drain
+					ClickTracker.drain
 					expect(Click.last.created_at).to be < time
 				end
 			end

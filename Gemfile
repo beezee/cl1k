@@ -9,7 +9,7 @@ gem 'clearance'
 gem 'geocoder'
 gem 'useragent'
 gem 'sidekiq'
-gem 'rspec-sidekiq'
+gem 'redis-mutex'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
