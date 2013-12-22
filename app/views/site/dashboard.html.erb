@@ -1,1 +1,5 @@
 <h3>Dashboard</h3>
+
+<div ng-controller="redirectsController">
+  <select ng-model="chosenRedirect" ng-options="r.target for r in redirects"></select>
+</div>

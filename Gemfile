@@ -14,6 +14,7 @@ gem 'redis-mutex'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
 gem 'bootstrap-sass'
+gem 'angularjs-rails-resource', '~> 0.2.3'
 
 group :development, :test do
   gem 'selenium-webdriver', '2.35.1'
@@ -26,6 +27,7 @@ gem 'uglifier', '>= 1.3.0'
 
 # Use CoffeeScript for .js.coffee assets and views
 gem 'coffee-rails', '~> 4.0.0'
+gem 'coffee-script-source', '1.5.0'
 
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
