@@ -15,6 +15,7 @@ gem 'redis-mutex'
 gem 'sass-rails', '~> 4.0.0'
 gem 'bootstrap-sass'
 gem 'angularjs-rails-resource', '~> 0.2.3'
+gem 'ng-rails-csrf'
 
 group :development, :test do
   gem 'selenium-webdriver', '2.35.1'

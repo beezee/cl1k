@@ -1,5 +1,61 @@
-<h3>Dashboard</h3>
-
-<div ng-controller="redirectsController">
-  <select ng-model="chosenRedirect" ng-options="r.target for r in redirects"></select>
+<div class="row" ng-controller="redirectsController">
+  <div style="position:absolute;top:65px;right:22px;">
+    <span class="label label-danger pull-right" ng-repeat="error in newRedirect.errors" ng-cloak>
+      Target {{error}} 
+    </span>
+  </div>
+  <div class="col-md-5">
+  </div>
+  <div class="col-md-7">
+    <div class="row" ng-show="chosenRedirect.target == 'Add new'" ng-cloak>
+      <div class="col-md-3">
+        <div class="label label-info pull-right">
+          New shortlink:
+        </div>
+       </div>
+      <div class="col-md-5"
+            ng-class="{'has-error': newRedirect.errors.length && newRedirect.errors.length > 0}">
+        <input type="text" class="form-control" ng-click="newRedirect.errors = []" ng-model="newRedirect.target"
+            placeholder="Target url..." />
+      </div>
+      <div class="col-md-4">
+        <div>
+          <button ng-click="createRedirect()" ng-disabled="!newRedirectValid()" 
+              class="btn btn-default">
+            <i class="glyphicon glyphicon-floppy-disk"></i>
+          </button>
+          <button ng-click="chosenRedirect = {}" class="btn btn-default">
+            <i class="glyphicon glyphicon-backward"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="row" ng-show="chosenRedirect.target != 'Add new'" ng-cloak>
+      <div class="col-md-3">
+        <div class="label label-info pull-right">
+          My shortlinks:
+        </div>
+       </div>
+      <div class="col-md-5">
+        <div>
+          <select class="form-control" ng-model="chosenRedirect" ng-options="r.target for r in redirects"></select>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div>
+          <button ng-click="deleteRedirect()" ng-disabled="!chosenRedirect.id" class="btn btn-default">
+            <i class="glyphicon glyphicon-remove-circle"></i>
+          </button>
+          <button ng-click="addRedirectChart()" ng-disabled="!chosenRedirect.id" class="btn btn-default">
+            <i class="glyphicon glyphicon-stats"></i>
+          </button>
+        </div>
+        <div>
+          <a ng-show="chosenRedirect.id" ng-href="http://cl1k.co/r/{{chosenRedirect.slug}}" target="_blank">
+            http://cl1k.co/r/{{chosenRedirect.slug}}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

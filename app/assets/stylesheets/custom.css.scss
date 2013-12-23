@@ -3,3 +3,7 @@
 #main {
 	margin-top: 80px;
 }
+
+[ng\:cloak], [ng-cloak], .ng-cloak {
+  display: none !important;
+}

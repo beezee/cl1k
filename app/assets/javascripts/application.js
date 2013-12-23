@@ -16,3 +16,4 @@
 //= require bootstrap
 //= require_tree .
 //= require angularjs/rails/resource
+//= require ng-rails-csrf
