@@ -1,6 +1,6 @@
 angular.module('cl1k.controllers')
-  .controller('redirectsController', ['$scope', 'Redirect', 
-  ($scope, Redirect) ->
+  .controller('redirectsController', ['$scope', '$http', 'Redirect',
+  ($scope, $http, Redirect) ->
 
     setRedirects = (redirects) ->
       redirects or= []
@@ -10,6 +10,8 @@ angular.module('cl1k.controllers')
     Redirect.query().then (results) -> setRedirects results
     
     $scope.chosenRedirect = false
+
+    $scope.charts = {} 
 
     initializeNewRedirect = () ->
       $scope.newRedirect = 
@@ -26,8 +28,27 @@ angular.module('cl1k.controllers')
           setRedirects _.reject($scope.redirects, (r) -> r.id is $scope.chosenRedirect.id)
           $scope.chosenRedirect = _.first $scope.redirects
 
-    $scope.addRedirectChart = ->
-      alert "adding chart for #{$scope.chosenRedirect.slug}"
+    fillInMissingDaysForChart = (data) ->
+      minDay = _.min(_.map(data, (series) -> series.values[0][0]))
+      maxDay = _.max(_.map(data, (series) -> _.last(series.values)[0]))
+      currentDay = minDay
+      dayIndex = 0
+      loop
+        break if currentDay > maxDay
+        _.each data, (series, seriesIndex) ->
+          if not series.values[dayIndex] or
+            series.values[dayIndex][0] != currentDay
+              data[seriesIndex].values.splice dayIndex, 0, [currentDay, 0]
+        dayIndex++
+        currentDay += 60*60*24*1000
+      data
+
+    $scope.addRedirectChart = (redirect) ->
+      chart = redirect: redirect, dimension: 'platform'
+      $http.get("/redirects/#{chart.redirect.id}/clicks/by/#{chart.dimension}").success((results) ->
+        chart.data = fillInMissingDaysForChart results
+        $scope.charts[chart.redirect.id] = chart
+      )
 
     $scope.createRedirect = ->
       if _.find($scope.redirects, (r) -> return r.target is $scope.newRedirect.target)

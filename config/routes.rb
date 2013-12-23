@@ -9,6 +9,7 @@ Cl1k::Application.routes.draw do
 		resources :clicks, only: :index, on: :member
 	end
 	get 'r/:redirect_slug' => 'redirects#clickthrough', as: :redirect_clickthrough
+  get 'redirects/:redirect_id/clicks/by/:dimension' => 'clicks#by_dimension', as: 'redirect_clicks_by_dimension'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
