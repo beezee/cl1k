@@ -62,7 +62,12 @@
   </div>
 <div class="row">
   <div ng-repeat="chart in charts">
-    <div nvd3-stacked-area data="chart.data"></div>
+    <div>
+      <select class="form-control" ng-model="chart.dimension" ng-options="dimension for dimension in filterDimensions()"
+          ng-change="updateRedirectChart(chart)">
+      </select>
+      <div nvd3-stacked-area data="chart.data"></div>
+    <div>
   </div>
 </div>
 </div>

@@ -2,6 +2,15 @@ angular.module('cl1k.controllers')
   .controller('redirectsController', ['$scope', '$http', 'Redirect',
   ($scope, $http, Redirect) ->
 
+    FILTER_DIMENSIONS = [
+      'browser',
+      'version',
+      'platform'
+    ]
+
+    $scope.filterDimensions = ->
+      FILTER_DIMENSIONS
+
     setRedirects = (redirects) ->
       redirects or= []
       redirects.push target: 'Add new' unless _.find(redirects, (r) -> r.target == 'Add new')
@@ -43,12 +52,16 @@ angular.module('cl1k.controllers')
         currentDay += 60*60*24*1000
       data
 
-    $scope.addRedirectChart = (redirect) ->
-      chart = redirect: redirect, dimension: 'platform'
+    $scope.updateRedirectChart = (chart) ->
+      delete $scope.charts[chart.redirect.id] if $scope.charts[chart.redirect.id]
       $http.get("/redirects/#{chart.redirect.id}/clicks/by/#{chart.dimension}").success((results) ->
         chart.data = fillInMissingDaysForChart results
         $scope.charts[chart.redirect.id] = chart
       )
+
+    $scope.addRedirectChart = (redirect) ->
+      chart = redirect: redirect, dimension: 'platform' 
+      $scope.updateRedirectChart(chart)
 
     $scope.createRedirect = ->
       if _.find($scope.redirects, (r) -> return r.target is $scope.newRedirect.target)
