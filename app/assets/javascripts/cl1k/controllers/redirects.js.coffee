@@ -6,6 +6,7 @@ angular.module('cl1k.controllers')
       'browser',
       'version',
       'platform'
+      'referer'
     ]
 
     $scope.filterDimensions = ->

@@ -16,6 +16,7 @@ describe Click do
 	it { should respond_to(:ip_address) }
 	it { should respond_to(:city_id) }
 	it { should respond_to(:city) }
+	it { should respond_to(:referer) }
 
 	it { should be_valid }
 

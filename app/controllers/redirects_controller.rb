@@ -20,7 +20,7 @@ class RedirectsController < ApplicationController
 	def clickthrough
 		@redirect = Redirect.find_by_slug(params[:redirect_slug]) || not_found
 		ClickTracker.perform_async redirect_id: @redirect.id, ip_address: request.headers['HTTP_X_REAL_IP'],
-					user_agent: request.headers['HTTP_USER_AGENT'], created_at: Time.now
+					user_agent: request.headers['HTTP_USER_AGENT'], created_at: Time.now, referer: request.headers['HTTP_REFERER'] 
 		redirect_to @redirect.target
 	end
 
